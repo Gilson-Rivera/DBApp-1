@@ -3,7 +3,7 @@ from handler.consumers import ConsumerHandler
 from handler.administrators import AdministratorHandler
 from handler.supplier import SupplierHandler
 from handler.fuel import FuelHandler
-from handler.food import FoodHandler
+from handler.resources import FoodHandler
 from handler.equipment import EquipHandler
 from handler.medical_devices import MedDevHandler
 from handler.fuel_supplies import FuelSuppliesHandler
