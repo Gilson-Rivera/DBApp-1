@@ -62,6 +62,20 @@ class ResourcesHandler:
         resources_list = dao.getResourcesByLocation(rlocation)
         return jsonify(Resources=resources_list)
 
+    def insertResourceJson(self, json):
+        rtype = json['rtype']
+        rbrand = json['rbrand']
+        rnumavailable = json['rnumavailable']
+        rprice = json['rprice']
+        rsupplier = json['rsupplier']
+        rlocation = json['rlocation']
+        if rtype and rbrand and rnumavailable and rprice and rsupplier and rlocation:
+            dao = ResourcesDAO()
+            result = dao.insert(rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation)
+            return jsonify(Resources=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
+
 class FoodHandler(ResourcesHandler):
     def build_Food_dict(self, row):
         result = {}
@@ -190,21 +204,27 @@ class FoodHandler(ResourcesHandler):
 
 
 class FuelHandler(ResourcesHandler):
-    def build_fuel_dict(self, row):
+    def build_Fuel_dict(self, row):
         result = {}
-        result['fuid'] = row[0]
-        result['ftype'] = row[1]
-        result['fsupplier'] = row[2]
-        result['fquantity'] = row[3]
-        result['flocation'] = row[4]
+        result['rid'] = row[0]
+        result['rtype'] = row[1]
+        result['rbrand'] = row[2]
+        result['rnumavailable'] = row[3]
+        result['rprice'] = row[4]
+        result['rsupplier'] = row[5]
+        result['rlocation'] = row[6]
+        result['fuid'] = row[7]
 
-    def build_fuel_attr(self, fuid, ftype, fsupplier, fquantity, flocation):
+    def build_Fuel_attr(self, rid, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation, fuid):
         result = {}
+        result['rid'] = rid
+        result['rtype'] = rtype
+        result['rbrand'] = rbrand
+        result['rnumavailable'] = rnumavailable
+        result['rprice'] = rprice
+        result['rsupplier'] = rsupplier
+        result['rlocation'] = rlocation
         result['fuid'] = fuid
-        result['ftype'] = ftype
-        result['fsupplier'] = fsupplier
-        result['fquantity'] = fquantity
-        result['flocation'] = flocation
         return result
 
     def getAllFuel(self):
@@ -283,21 +303,25 @@ class FuelHandler(ResourcesHandler):
 class EquipmentHanlder(ResourcesHandler):
     def build_Equipment_dict(self, row):
         result = {}
-        result['eid'] = row[0]
-        result['etype'] = row[1]
-        result['esupplier'] = row[2]
-        result['ebrand'] = row[3]
-        result['equantity'] = row[4]
-        result['elocation'] = row[5]
+        result['rid'] = row[0]
+        result['rtype'] = row[1]
+        result['rbrand'] = row[2]
+        result['rnumavailable'] = row[3]
+        result['rprice'] = row[4]
+        result['rsupplier'] = row[5]
+        result['rlocation'] = row[6]
+        result['eid'] = row[7]
 
-    def build_Equipment_attr(self, eid, etype, esupplier, ebrand, equantity, elocation):
+    def build_Equipment_attr(self, rid, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation, eid):
         result = {}
+        result['rid'] = rid
+        result['rtype'] = rtype
+        result['rbrand'] = rbrand
+        result['rnumavailable'] = rnumavailable
+        result['rprice'] = rprice
+        result['rsupplier'] = rsupplier
+        result['rlocation'] = rlocation
         result['eid'] = eid
-        result['etype'] = etype
-        result['esupplier'] = esupplier
-        result['ebrand'] = ebrand
-        result['equantity'] = equantity
-        result['elocation'] = elocation
         return result
 
     def getAllEquipment(self):
@@ -386,21 +410,25 @@ class EquipmentHanlder(ResourcesHandler):
 class MedDevHandler(ResourcesHandler):
     def build_MedDev_dict(self, row):
         result = {}
-        result['mdid'] = row[0]
-        result['mdtype'] = row[1]
-        result['mdsupplier'] = row[2]
-        result['mdbrand'] = row[3]
-        result['mdquantity'] = row[4]
-        result['mdlocation'] = row[5]
+        result['rid'] = row[0]
+        result['rtype'] = row[1]
+        result['rbrand'] = row[2]
+        result['rnumavailable'] = row[3]
+        result['rprice'] = row[4]
+        result['rsupplier'] = row[5]
+        result['rlocation'] = row[6]
+        result['mdid'] = row[7]
 
-    def build_MedDev_attr(self, mdid, mdtype, mdsupplier, mdbrand, mdquantity, mdlocation):
+    def build_MedDev_attr(self, rid, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation, mdid):
         result = {}
+        result['rid'] = rid
+        result['rtype'] = rtype
+        result['rbrand'] = rbrand
+        result['rnumavailable'] = rnumavailable
+        result['rprice'] = rprice
+        result['rsupplier'] = rsupplier
+        result['rlocation'] = rlocation
         result['mdid'] = mdid
-        result['mdtype'] = mdtype
-        result['mdsupplier'] = mdsupplier
-        result['mdbrand'] = mdbrand
-        result['mdquantity'] = mdquantity
-        result['mdlocation'] = mdlocation
         return result
 
     def getAllMedDev(self):
@@ -487,23 +515,29 @@ class MedDevHandler(ResourcesHandler):
 class MedHandler(ResourcesHandler):
     def build_Med_dict(self, row):
         result = {}
-        result['mid'] = row[0]
-        result['mname'] = row[1]
-        result['mexpdate'] = row[2]
-        result['msupplier'] = row[3]
-        result['mbrand'] = row[4]
-        result['mquantity'] = row[5]
-        result['mlocation'] = row[6]
+        result['rid'] = row[0]
+        result['rtype'] = row[1]
+        result['rbrand'] = row[2]
+        result['rnumavailable'] = row[3]
+        result['rprice'] = row[4]
+        result['rsupplier'] = row[5]
+        result['rlocation'] = row[6]
+        result['mid'] = row[7]
+        result['mexpdate'] = row[8]
+        result['mclass'] = row[9]
 
-    def build_Med_attr(self, mid, mname, mexpdate, msupplier, mbrand, mquantity, mlocation):
+    def build_Med_attr(self, rid, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation, mid, mexpdat, mclass):
         result = {}
+        result['rid'] = rid
+        result['rtype'] = rtype
+        result['rbrand'] = rbrand
+        result['rnumavailable'] = rnumavailable
+        result['rprice'] = rprice
+        result['rsupplier'] = rsupplier
+        result['rlocation'] = rlocation
         result['mid'] = mid
-        result['mname'] = mname
-        result['mexpdate'] = mexpdate
-        result['msupplier'] = msupplier
-        result['mbrand'] = mbrand
-        result['mquantity'] = mquantity
-        result['mlocation'] = mlocation
+        result['mexpdate']
+        result['mclass']
         return result
 
     def getAllMed(self):
@@ -591,23 +625,29 @@ class MedHandler(ResourcesHandler):
 class WaterHandler(ResourcesHandler):
     def build_Water_dict(self, row):
         result = {}
-        result['fid'] = row[0]
-        result['fname'] = row[1]
-        result['fexpdate'] = row[2]
-        result['fsupplier'] = row[3]
-        result['fbrand'] = row[4]
-        result['fquantity'] = row[5]
-        result['flocation'] = row[6]
+        result['rid'] = row[0]
+        result['rtype'] = row[1]
+        result['rbrand'] = row[2]
+        result['rnumavailable'] = row[3]
+        result['rprice'] = row[4]
+        result['rsupplier'] = row[5]
+        result['rlocation'] = row[6]
+        result['wid'] = row[7]
+        result['wvolume'] = row[8]
+        result['wexpdate'] = row[9]
 
-    def build_Water_attr(self, fid, fname, fexpdate, fsupplier, fbrand, fquantity, flocation):
+    def build_Water_attr(self, rid, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation, wid, wvolume, wexpdate):
         result = {}
-        result['fid'] = fid
-        result['fname'] = fname
-        result['fexpdate'] = fexpdate
-        result['fsupplier'] = fsupplier
-        result['fbrand'] = fbrand
-        result['fquantity'] = fquantity
-        result['flocation'] = flocation
+        result['rid'] = rid
+        result['rtype'] = rtype
+        result['rbrand'] = rbrand
+        result['rnumavailable'] = rnumavailable
+        result['rprice'] = rprice
+        result['rsupplier'] = rsupplier
+        result['rlocation'] = rlocation
+        result['wid'] = wid
+        result['wvolume'] = wvolume
+        result['wexpdate'] = wexpdate
         return result
 
     def getAllWater(self):
@@ -710,23 +750,31 @@ class WaterHandler(ResourcesHandler):
 class ClothingHandlers(ResourcesHandler):
     def build_Clothing_dict(self, row):
         result = {}
-        result['fid'] = row[0]
-        result['fname'] = row[1]
-        result['fexpdate'] = row[2]
-        result['fsupplier'] = row[3]
-        result['fbrand'] = row[4]
-        result['fquantity'] = row[5]
-        result['flocation'] = row[6]
+        result['rid'] = row[0]
+        result['rtype'] = row[1]
+        result['rbrand'] = row[2]
+        result['rnumavailable'] = row[3]
+        result['rprice'] = row[4]
+        result['rsupplier'] = row[5]
+        result['rlocation'] = row[6]
+        result['cid'] = row[7]
+        result['cpiece'] = row[8]
+        result['csex'] = row[9]
+        result['csize'] = row[10]
 
-    def build_Clothing_attr(self, fid, fname, fexpdate, fsupplier, fbrand, fquantity, flocation):
+    def build_Clothing_attr(self, rid, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation, cid, cpiece, csex, csize):
         result = {}
-        result['fid'] = fid
-        result['fname'] = fname
-        result['fexpdate'] = fexpdate
-        result['fsupplier'] = fsupplier
-        result['fbrand'] = fbrand
-        result['fquantity'] = fquantity
-        result['flocation'] = flocation
+        result['rid'] = rid
+        result['rtype'] = rtype
+        result['rbrand'] = rbrand
+        result['rnumavailable'] = rnumavailable
+        result['rprice'] = rprice
+        result['rsupplier'] = rsupplier
+        result['rlocation'] = rlocation
+        result['cid'] = cid
+        result['cpiece'] = cpiece
+        result['csex'] = csex
+        result['csize'] = csize
         return result
 
     def getAllClothing(self):
@@ -810,18 +858,3 @@ class ClothingHandlers(ResourcesHandler):
         else:
             return jsonify(dao.getClothingByID(fid)), 201
 
-
-
-    def insertSupplierJson(self, json):
-        rtype = json['rtype']
-        rbrand = json['rbrand']
-        rnumavailable = json['rnumavailable']
-        rprice = json['rprice']
-        rsupplier = json['rsupplier']
-        rlocation = json['rlocation']
-        if rtype and rbrand and rnumavailable and rprice and rsupplier and rlocation:
-            dao = ResourcesDAO()
-            result = dao.insert(rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation)
-            return jsonify(Resources=result), 201
-        else:
-            return jsonify(Error="Unexpected attributes in post request"), 400
