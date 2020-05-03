@@ -5,6 +5,7 @@ import psycopg2
 
 class ResourcesDAO:
 
+
     def getAllResources(self):
         result = "This is a list of resources"
         return result
@@ -40,6 +41,7 @@ class ResourcesDAO:
     def insert(self, rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation):
         result = "Supplier inserted"
         return result
+
 
 class FoodDAO(ResourcesDAO):
     def getAllFood(self):

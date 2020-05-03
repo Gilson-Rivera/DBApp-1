@@ -20,7 +20,7 @@ class ResourcesHandler:
         result['rprice'] = row[4]
         result['rsupplier'] = row[5]
         result['rlocation'] = row[6]
-        return result
+
 
     def getAllResources(self):
         dao = ResourcesDAO()
@@ -731,22 +731,6 @@ class WaterHandler(ResourcesHandler):
         else:
             return jsonify(dao.getWaterByID(fid)), 201
 
-
-
-    def insertSupplierJson(self, json):
-        rtype = json['rtype']
-        rbrand = json['rbrand']
-        rnumavailable = json['rnumavailable']
-        rprice = json['rprice']
-        rsupplier = json['rsupplier']
-        rlocation = json['rlocation']
-        if rtype and rbrand and rnumavailable and rprice and rsupplier and rlocation:
-            dao = ResourcesDAO()
-            result = dao.insert(rtype, rbrand, rnumavailable, rprice, rsupplier, rlocation)
-            return jsonify(Resources=result), 201
-        else:
-            return jsonify(Error="Unexpected attributes in post request"), 400
-
 class ClothingHandlers(ResourcesHandler):
     def build_Clothing_dict(self, row):
         result = {}
@@ -857,4 +841,3 @@ class ClothingHandlers(ResourcesHandler):
             return jsonify(Error="Consumer not found."), 404
         else:
             return jsonify(dao.getClothingByID(fid)), 201
-
